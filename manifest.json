@@ -1,0 +1,28 @@
+{
+    "name": "Bus Live SG",
+    "description": "Live bus timings for Singapore buses",
+    "version": "0.0.1",
+    "manifest_version": 3,
+
+    "permissions": ["activeTab", "geolocation", "storage"],
+    "host_permissions": ["http://datamall2.mytransport.sg/ltaodataservice/*"],
+
+    "background": {
+        "service_worker": "background.js"
+    },
+
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "/images/bus-16.ico",
+            "48": "/images/bus-48.png",
+            "128": "/images/bus-128.png"
+        }
+    },
+
+    "icons": {
+        "16": "/images/bus-16.ico",
+        "48": "/images/bus-48.png",
+        "128": "/images/bus-128.png"
+    }
+}

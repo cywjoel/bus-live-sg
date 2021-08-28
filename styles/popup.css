@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Overpass+Mono&display=swap');
+
+:root {
+    --transit-green: #299693;
+    --board: #0a291b;
+    --board-display: #4ce6d1;
+    --lato: 'Lato', sans-serif;
+    --overpass: 'Overpass Mono', sans-serif;
+}
+
+html {
+    max-width: 800px;
+    margin: auto;
+}
+
+body {
+    font-family: var(--lato);
+    font-size: 16px;
+    min-width: 430px;
+    align-items: center;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-gap: 5px;
+}
+
+label {
+    font-family: var(--lato);
+    grid-column: 1 / 2;
+}
+
+input, button {
+    font-family: var(--lato);
+    grid-column: 2 / 3;
+}
+
+.header {
+    background-color: var(--transit-green);
+    display: flex;
+    padding: 5px 0;
+    margin: 10px 0;
+}
+
+h2 {
+    color: white;
+    font-weight: 700;
+}
+
+.version-no {
+    color:white;
+    font-size: 12px;
+}
+
+.toggle {
+    height: 40px;
+    display: flex;
+    margin: 10px 0;
+}
+
+.toggle-tabs {
+    text-align: center;
+    background-color: #EEEEEE;
+    padding: 10px 0;
+    border-bottom: 1px solid black;
+    width: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.toggle-tabs:hover {
+    border-top-left-radius: 7.5px;
+    border-top-right-radius: 7.5px;
+    background-color: lightgray;
+}
+
+.active {
+    background-color: white;
+    border: 1px solid black;
+    border-bottom: 0;
+    border-top-left-radius: 7.5px;
+    border-top-right-radius: 7.5px;
+}
+
+
+
+.timing-board {
+    background-color: var(--board);
+}
+
+.board-row {
+    padding: 2px;
+    display: flex;
+}
+
+.row-2 {
+    width: 50%;
+}
+
+.row-3 {
+    width: 25%;
+}
+
+.board-paint {
+    color: white;
+    padding: 5px;
+}
+
+.board-dynamic {
+    color: var(--board-display);
+    font-family: var(--overpass);
+    font-size: 24px;
+    padding: 5px;
+}
+
+.timing-1 {
+    overflow-x: visible;
+    white-space: nowrap;
+}
+
+/* placeholders */
+
+#stopName:empty::before {
+    content: "----- ----- ----- -----";
+}
+
+#stopCode:empty::before {
+    content: "-----";
+}
+
+#requestTime:empty::before {
+    content: "---/88:88:88";
+}
+
+#serviceNo:empty::before {
+    content: "000";
+}
+
+#timing1:empty::before {
+    content: "NO EST. AVAILABLE";
+}

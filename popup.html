@@ -1,0 +1,99 @@
+<!doctype html>
+
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            
+            <title>Live Bus SG</title>
+            <meta name="description" content="Live bus timings for Singapore buses">
+            <meta name="author" content="Joel Chan">
+            
+            <link rel="stylesheet" href="../styles/popup.css">   
+        </head>
+    
+        <body>
+            <div class="header">
+                <img src="../images/bus-white.png" alt="Bus logo">
+                &emsp13;
+                <h2>Live Bus SG</h2>
+                &emsp13;
+                <p class="version-no"><i>v0.0.1 (alpha)</i></p>
+            </div>
+            <div class="quick-search">
+                <div class="toggle">
+                    <div class="toggle-tabs active" id="searchBusService">By bus service</div>
+                    <div class="toggle-tabs" id="searchBusStopCode">By bus stop code</div>
+                </div>
+
+                <form class="bus-form" name="busForm" id="searchByService">
+                    <label for="service-no">Bus number <i>(required)</i>:</label>
+                    <input type="text" id="service-no-1" required>
+
+                    <label for="bus-stop-code-1">Bus stop code <i>(required)</i>:</label>
+                    <input type="text" id="bus-stop-code-1" required>
+
+                    <input type="submit" id="query-api-1" value="Search">
+                </form>
+
+                <form class="bus-form" name="busForm" id="searchByStop" style="display:none">
+                    <label for="bus-stop-code-1">Bus stop code <i>(required)</i>:</label>
+                    <input type="text" id="bus-stop-code-2" required>
+
+                    <label for="service-no-2">Bus number <i>(required)</i>: </label>
+                    <input type="text" id="service-no-2" required>
+
+                    <input type="submit" id="query-api-2" value="Search">
+                </form>
+            </div>
+
+            <hr />
+            
+            <div class="timing-board">
+                <div class="board-row">
+                    <div class="row-1">
+                        <div class="board-paint">Bus Stop Name</div>
+                        <div class="board-dynamic" id="stopName"></div>
+                    </div>
+                </div>
+                <div class="board-row">
+                    <div class="row-2">
+                        <div class="board-paint">Bus Stop No.</div>
+                        <div class="board-dynamic" id="stopCode"></div>
+                    </div>
+                    <div class="row-2">
+                        <div class="board-paint">Request Day/Time</div>
+                        <div class="board-dynamic" id="requestTime"></div>
+                    </div>
+                </div>
+                <div class="board-row">
+                    <div class="row-3">
+                        <div class="board-paint">Bus No.</div>
+                        <div class="board-dynamic" id="serviceNo"></div>
+                    </div>
+                    <div class="row-3">
+                        <div class="board-paint">Next</div>
+                        <div class="board-dynamic timing-1" id="timing1"></div>
+                    </div>
+                    <div class="row-3">
+                        <div class="board-paint">Second</div>
+                        <div class="board-dynamic" id="timing2"></div>
+                    </div>
+                    <div class="row-3">
+                        <div class="board-paint">Third</div>
+                        <div class="board-dynamic" id="timing3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div>
+                Here's where buttons go.<br>
+            </div>
+            
+            <script src="../scripts/popup.js"></script>
+            <script src="../scripts/toggle.js"></script>
+
+        </body>
+    </html>
