@@ -2,11 +2,15 @@ import json
 import requests
 import os
 
+with open('../config/config.json') as f_config:
+    config = json.load(f_config)
+    config_key = config['apikey']
+
 skip_val = 0
 
 url = 'http://datamall2.mytransport.sg/ltaodataservice/BusStops?$skip='
 
-headers = { 'AccountKey': '5kWBoEkaQsSPQOZOBDF8Pg==',
+headers = { 'AccountKey': config_key,
             'accept': 'application/json' }
 
 arr = []

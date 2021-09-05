@@ -27,21 +27,28 @@
                 </div>
 
                 <form class="bus-form" name="busForm" id="searchByService">
-                    <label for="service-no">Bus number <i>(required)</i>:</label>
-                    <input type="text" id="service-no-1" required>
+                    <label for="service-no-1">Bus number <i>(required)</i>:</label>
+                    <select id="service-no-1" required>
+                        <option value="">Select...</option>
+                    </select>
 
                     <label for="bus-stop-code-1">Bus stop code <i>(required)</i>:</label>
-                    <input type="text" id="bus-stop-code-1" required>
+                    <select id="bus-stop-code-1" required>
+                        <option value="">Select...</option>
+                    </select>
 
                     <input type="submit" id="query-api-1" value="Search">
                 </form>
 
                 <form class="bus-form" name="busForm" id="searchByStop" style="display:none">
-                    <label for="bus-stop-code-1">Bus stop code <i>(required)</i>:</label>
-                    <input type="text" id="bus-stop-code-2" required>
+                    <label for="bus-stop-code-2">Bus stop code <i>(required)</i>:</label>
+                    <input list="bus-stop-code-2-options" id="bus-stop-code-2" name="bus-stop-code-2" placeholder="type bus stop code or name..." pattern="[0-9]{5}" title="A valid 5-digit bus stop code is required." required />
+                    <datalist id="bus-stop-code-2-options"></datalist>
 
                     <label for="service-no-2">Bus number <i>(required)</i>: </label>
-                    <input type="text" id="service-no-2" required>
+                    <select id="service-no-2" required>
+                        <option value="">Select...</option>
+                    </select>
 
                     <input type="submit" id="query-api-2" value="Search">
                 </form>

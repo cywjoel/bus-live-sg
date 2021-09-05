@@ -16,7 +16,7 @@ html {
 body {
     font-family: var(--lato);
     font-size: 16px;
-    min-width: 430px;
+    min-width: 500px;
     align-items: center;
 }
 
@@ -31,9 +31,11 @@ label {
     grid-column: 1 / 2;
 }
 
-input, button {
+input, button, select {
     font-family: var(--lato);
     grid-column: 2 / 3;
+    height: 24px;
+    box-sizing: border-box;
 }
 
 .header {

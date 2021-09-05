@@ -78,7 +78,6 @@ function printBoardB(busArr) {              // bus stop code --> service no.
 }
 
 function getBusStopName(busStopData, busStopCode) {
-    console.log(busStopData[0]);
     for (let entry of busStopData) {
         if (entry['BusStopCode'] == busStopCode) {
             console.log(entry['Description']);
@@ -225,6 +224,149 @@ function calcArrTime(datetime, arrDatetime) {
     }
 }
 
+// select-by-bus-related functions
+
+function populateByBus(busServicesData) {
+    let options = [];
+    for (const busSvc of busServicesData) {
+        let tmp = busSvc['ServiceNo'];
+        if (!options.includes(tmp)) {
+            options.push(tmp);
+        }
+    }
+    console.log(options);
+    select = document.getElementById("service-no-1");
+    for (const option of options) {
+        let opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        select.appendChild(opt);
+    }
+}
+
+function populateStopsAfter(busNo) {
+    let options = [];
+    for (const route of busRoutesData) {
+        if (route['ServiceNo'] == busNo) {
+            let tmp = [route['BusStopCode'], route['Direction'], route['StopSequence']];
+            for (const stops of busStopData) {
+                if (stops['BusStopCode'] == tmp[0]) {
+                    tmp.push(stops['Description']);
+                }
+            }
+            options.push(tmp);
+        }
+    }
+    console.log(options);
+
+    let countDir = 0;
+    let countArr = []
+    for (const option of options) {
+        let tmpArr = [];
+        let tmp = option[1];
+        if (!countArr.includes(tmp)) {
+            countArr.push(tmp);
+        }
+    }
+    countDir = countArr.length;
+    console.log(countDir);
+
+    let dynamicGenerated = document.getElementById("bus-stop-code-1").getElementsByClassName("dynamic-generated");
+    console.log(dynamicGenerated);
+    while (dynamicGenerated[0]) {
+        dynamicGenerated[0].remove();
+    }
+
+    for (let i = 1; i <= countDir; i++) {
+        console.log("i = " + i);
+        let routeDir = countArr[i - 1];
+        let routeDirLength = getRouteDirLength(i, options);
+        console.log("countDir = " + routeDir);
+        console.log("total stops in direction" + routeDir + " = " + routeDirLength);
+
+        let select = document.getElementById("bus-stop-code-1");
+        let optSection = document.createElement('option');
+        optSection.className = "dynamic-generated";
+        optSection.value = "";
+        optSection.textContent = "---------- Direction " + i + " ----------";
+        optSection.disabled = true;
+        select.appendChild(optSection);
+
+        for (const option of options) {
+            if (option[1] == i) {
+                let opt = document.createElement('option');
+                opt.className = "dynamic-generated";
+                opt.value = option[0];
+                opt.textContent = option[0] + " (" + option[3].toUpperCase() + ")";
+                select.appendChild(opt);
+            }
+        }
+    }
+}
+
+function getRouteDirLength(i, options) {
+    let count = 0;
+    for (const option of options) {
+        if (option[1] == i) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// select-by-stop-related functions
+
+function populateByStop(busStopData) {
+    let options = [];
+    for (const busStop of busStopData) {
+        options.push([busStop['BusStopCode'], busStop['Description']]);
+    }
+    console.log(options);
+    select = document.getElementById("bus-stop-code-2-options");
+    for (const option of options) {
+        let opt = document.createElement('option');
+        opt.value = option[0];
+        opt.textContent = option[1];
+        select.appendChild(opt);
+    }
+}
+
+function populateBusesAfter(stopNo) {
+    let options = [];
+    for (const route of busRoutesData) {
+        if (route['BusStopCode'] == stopNo) {
+            options.push(route['ServiceNo']);
+        }
+    }
+    console.log(options);
+
+    let dynamicGenerated = document.getElementById("service-no-2").getElementsByClassName("dynamic-generated");
+    console.log(dynamicGenerated);
+    while (dynamicGenerated[0]) {
+        dynamicGenerated[0].remove();
+    }
+
+    let select = document.getElementById("service-no-2");
+
+    if (options.length == 0) {
+        let opt = document.createElement('option');
+        opt.className = "dynamic-generated";
+        opt.value = "";
+        opt.disabled = true;
+        opt.innerText = "The bus stop code does not exist.";
+        console.log(opt.value);
+        select.appendChild(opt);
+    }
+    for (const option of options) {
+        let opt = document.createElement('option');
+        opt.className = "dynamic-generated";
+        opt.value = option;
+        opt.innerText = option;
+        console.log(opt.value);
+        select.appendChild(opt);
+    }
+}
+
 // get apikey from config.json
 
 let apiKey;
@@ -238,6 +380,17 @@ fetch("./config/config.json")
 
 // load files from local
 
+let busServicesData;
+
+fetch("./data/bus_services.json")
+    .then(response => response.json())
+    .then (data => {
+        busServicesData = data['value'];
+        console.log(busServicesData);
+        populateByBus(busServicesData);
+    })
+    .catch(error => console.error(error));
+
 let busStopData;
 
 fetch("./data/bus_stop_ids.json")
@@ -245,6 +398,7 @@ fetch("./data/bus_stop_ids.json")
     .then (data => {
         busStopData = data['value'];
         console.log(busStopData);
+        populateByStop(busStopData);
     })
     .catch(error => console.error(error));
 
@@ -274,11 +428,25 @@ function submitHandlerB() {     // bus stop code --> service no.
     return false;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById("query-api-1").onclick = submitHandlerA;
-})
+// event scripts
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById("query-api-2").onclick = submitHandlerB;
+    document.getElementById("searchByService").onsubmit = submitHandlerA;
+    document.getElementById("searchByStop").onsubmit = submitHandlerB;
+});
+
+const selectBus = document.querySelector("#service-no-1");
+selectBus.addEventListener('change', function() {
+    let busNo = selectBus.value;
+    console.log("bus no.: " + busNo);
+    populateStopsAfter(busNo);
+});
+
+const selectStop = document.querySelector("#bus-stop-code-2");
+selectStop.addEventListener('change', function() {
+    let stopNo = selectStop.value;
+    console.log("stop no.: " + stopNo);
+    console.log("stop code check: " + stopNo.length);
+    populateBusesAfter(stopNo);
 })
 
